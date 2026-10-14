@@ -28,3 +28,5 @@ Open with tap/click or Enter/Space. Native `dialog.showModal()` provides modal s
 Local browser: repeated Thai→English→Chinese switches and reload persistence; created sample title `学校 วันนี้ QA sample` and note `เรียน ดนตรี 保存 — original record` remained verbatim; editor values round-tripped; sample record deleted through UI afterward. Calendar filtering, completion, project status/change, edit/delete passed. No console errors/warnings.
 
 Modal: Enter open, Escape close, focus return, repeated close/reopen, outside tap, 320×740 and 390×844 mobile, 820×1180 tablet, desktop. No horizontal overflow; 320px dialog bounds stayed within viewport and long content scrolled internally. Native modal makes background inert. Test data was confined to local preview storage and never committed.
+
+Deployment entry CSS/font CSS and module script URLs carry a release version so a newly fetched page cannot silently pair the new language picker with an older cached application script. Existing open pages may need a normal reload to fetch the latest HTML.
