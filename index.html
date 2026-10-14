@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="World Lab v2 — a picture-first learning dashboard. Sample data, private browser-local editing."
+      content="World Lab v2 — a picture-first learning dashboard. Browser-local editing; data profile controls sample or private content."
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -45,6 +45,12 @@
           </div>
         </div>
       </section>
+      <section
+        id="context"
+        class="context-panel"
+        aria-label="ข้อมูลที่ยืนยันและรอยืนยัน"
+        hidden
+      ></section>
       <nav class="jump" aria-label="ไปยังส่วนต่าง ๆ">
         <a href="#schedule">🗓️ <span>แผนวันนี้</span></a
         ><a href="#calendar">📅 <span>ปฏิทิน</span></a
@@ -218,7 +224,7 @@
       </div>
       <div id="record-list"></div>
       <form id="record-form" hidden></form>
-      <p class="quiet">
+      <p class="quiet" id="editor-disclosure">
         เริ่มจากข้อมูลตัวอย่างทั้งหมด · เมื่อต้องการใช้จริง ให้แก้ไข /
         ลบรายการตัวอย่างในแต่ละหมวด
       </p>

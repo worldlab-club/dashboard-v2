@@ -2,7 +2,7 @@
 
 ## Automated checks
 
-`npm test`: **7 / 7 pass**, using Node's built-in test runner (no installed dependencies).
+Original model checks: **7 / 7 pass**, using Node's built-in test runner (no installed dependencies).
 
 1. All bundled records are marked sample; dates belong to the seed month; YouTube fields are empty.
 2. Timetable day/class/teaching filtering and chronological ordering.
@@ -46,7 +46,17 @@ Screenshots: `desktop.jpg`, `tablet.jpg`, `mobile.jpg`, and `editor.jpg` (generi
 
 - Private `worldlab-club/dashboard-v2` was created using the independently verified World Lab browser session. Existing `github-worldlab` SSH authenticates as `worldlab-club`; main is delivered through this route. Repository visibility and remote main commit are verified during handoff. No personal account is used.
 - No public hosting enabled. Existing site remains untouched.
-- Schedules, school dates, exam dates and child interests require parent confirmation. YouTube sources require parent curation.
+- Daily schedules, holidays, exam dates, course enrollment, hobby status and current interests still require confirmation. The term date range has since been parent-confirmed; see PROVENANCE.md. YouTube sources require parent curation.
 - Local-only data has no cross-device sync, authenticated separation, backup or import/export.
 - Schedule items recur weekly in one-day views. Overnight lessons and overlapping lessons are not specially modeled; current focus picks the first matching activity chronologically.
 - No testing against Safari, Firefox, actual screen-reader software, or storage-quota failure injection was performed. Storage failure recovery exists in code and is disclosed.
+
+## Private baseline and safe demo update — 2026-10-14
+
+Default profile contains parent-confirmed school term start/end and three existing World Lab resources with source/scope. No daily times, course enrollment, exams or hobby status were inferred. New tests validate that baseline, deep-copy isolation, separate storage keys, and a six-file demo export with no private module, school facts, source docs or stale private output. The original seven model scenarios remain applicable to demo behavior.
+
+Hosting readiness: GitHub Pages Settings for the private repository says “Upgrade or make this repository public to enable Pages”. No free GitHub Pages route preserving this private repository is available on the current plan. Private Pages audience requires an organization on Enterprise Cloud; a private source repo alone does not make a site family-only. No plan purchase, permission grant, visibility change or hosting deployment was performed. Separate sample-only demo output is prepared locally, not hosted.
+
+## Public release authorization and audit — 2026-10-14
+
+After the private-plan Pages restriction and public audience were explained, the parent explicitly requested public access. Only dashboard-v2 is changed to public and deployed through GitHub Pages. The default profile contains the confirmed term and existing World Lab resources; unknown times, course enrollment, holidays, exams and hobby status remain unknown. Audit of tracked files and reachable commit trees checks for secret material and unintended account/family identifiers before visibility changes. No unrelated personal records are included. The existing dashboard is untouched.

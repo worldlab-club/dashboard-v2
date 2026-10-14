@@ -1127,3 +1127,39 @@ progress::-moz-progress-bar {
     font-size: 26px;
   }
 }
+.context-panel {
+  background: #edf1e7;
+  border: 1px solid #ccd8c4;
+  border-radius: 20px;
+  padding: 22px 26px;
+  margin-bottom: 23px;
+}
+.context-panel h2 {
+  font-size: 22px;
+}
+.context-panel p {
+  margin: 8px 0;
+}
+.context-panel .pending {
+  font-size: 12px;
+  background: #fffa;
+  padding: 10px 13px;
+  border-radius: 10px;
+}
+.provenance {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 6px 0 12px;
+}
+.cards > .empty {
+  grid-column: 1/-1;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 20px;
+  padding: 25px;
+}
+.context-panel[hidden] {
+  display: none;
+}

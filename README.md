@@ -30,30 +30,33 @@ npm run check
 - Parent corner: add, edit, and explicitly confirm deletion in each category; choose picture, schedule day/type/time, event date/type, project status/progress/update, interest link, and example/personal label.
 - Responsive mobile, tablet and desktop layout, Thai labels, keyboard-operable native controls, modal dialogs with names and Escape dismissal, focus rings, skip link, reduced-motion support, and labeled progress indicators.
 
-## Sample data and privacy
+## Data profiles and privacy
 
-**All bundled schedules, calendar dates, exams, hobby statuses, and interests are examples.** Demo calendar items are placed on days 10, 18, and 23 of the browser's first-run Bangkok month. Those dates do not represent real school holidays or exams. The UI repeats this disclosure. No worksheet handwriting was used as a real timetable.
+The parent explicitly approved making this educational dashboard public on 2026-10-14 after the audience and GitHub Pages limitations were explained. The default app uses only confirmed information: the school term date range and existing World Lab learning resources. See [data provenance](docs/PROVENANCE.md). Lesson/teaching times, individual course-track enrollment, holidays, exams, hobby statuses and current interests remain unconfirmed; they are not invented. Unknown schedules show “awaiting confirmation”.
 
-The parent editor stores changes in `localStorage` under `worldlab-dashboard-v2.1`, only for this browser profile and origin. It does not write to source files or GitHub, sync devices, or provide an authenticated parent account. Anyone using the same browser profile can see or change those records. Clearing site data, switching origins/ports, or private browsing can lose edits. Storage failures show a visible warning. There is no cloud backup/export in this MVP.
+`data-profile.js` selects `dashboard-data.js`, the approved public educational baseline. Anyone can read these published files. No child photos, detailed daily timetable, family identifiers, account emails, credentials or unrelated records are included. Only add information appropriate for the approved public audience. A future family-only section requires real authentication and separate protected storage.
 
-Do not commit real child schedules, school records, private photos, or identifying family data. Keep the default generic example content in the repository. Enter personal records only in the local editor. Screenshots in `docs/` show generic samples only. The app loads no external fonts, images, analytics, weather, or scripts; CSP blocks network connections. External learning links leave the app when clicked and are governed by those services' privacy policies.
+Browser editing uses a profile-specific localStorage key. Local edits stay on that browser/origin and do not sync to GitHub, the public site, or other devices. Prior prototype/sample storage is not automatically migrated. Anyone using the same browser profile can see/change local records; clearing browser data can lose them. The parent corner is an editor, not an authenticated private area. Storage failures display a warning. There is no cloud backup or cross-device sync.
 
-## Repository and hosting status
-
-Repository: **[worldlab-club/dashboard-v2](https://github.com/worldlab-club/dashboard-v2)** · visibility **Private** · branch **main**.
-
-Created on 2026-10-14 using the independently verified **worldlab-club** GitHub browser session. The repository owner and Private badge were checked after creation. No personal GitHub account was used for repository creation or Git writes.
-
-Git transport uses the existing World Lab SSH alias:
+An optional sample-only export remains available:
 
 ```sh
-git remote -v
-# origin git@github-worldlab:worldlab-club/dashboard-v2.git
+npm run build:demo
+# Produces dist-demo/ with invented, clearly labelled examples only.
 ```
 
-Live SSH verification returned “Hi worldlab-club! You've successfully authenticated”. No private key contents or token stores were read or copied, and no new credentials or access grants were created. On another machine use your own already-authorized World Lab Git connection; the alias is specific to this configured machine.
+The exporter copies six allowlisted application files, replaces the data entry point with generic samples, excludes the confirmed-data module/docs/screenshots, removes stale unapproved output, and audits known real-data markers. Sample and confirmed profiles use different browser storage keys. Demo schedules and exam dates are labelled invented examples; no worksheet handwriting was used as an actual schedule. YouTube links remain unconfigured until verified choices are supplied.
 
-**Hosting is not enabled.** There is no GitHub Pages workflow or deployment configuration. The original `worldlab-club/dashboard` remains unchanged. Keep child data in browser-local edits; only generic example code/data belongs in this repository. Enable hosting only after a separate explicit decision about audience and data.
+No external fonts, images, analytics, weather or scripts load automatically; CSP blocks connections. External learning links leave the site only when clicked and have their own privacy policies. GitHub hosting can collect standard request/security logs.
+
+## Repository and hosting
+
+- Repository: [worldlab-club/dashboard-v2](https://github.com/worldlab-club/dashboard-v2), public by explicit parent authorization.
+- Branch: `main`.
+- GitHub Pages: [https://worldlab-club.github.io/dashboard-v2/](https://worldlab-club.github.io/dashboard-v2/).
+- Publishing source: `main` / repository root; `.nojekyll` serves the buildless modules unchanged.
+- World Lab Git transport: existing `git@github-worldlab:worldlab-club/dashboard-v2.git`, verified to authenticate as `worldlab-club`.
+- The original `worldlab-club/dashboard` is unchanged. No paid plan, new credential or unrelated permission was added.
 
 ## Design references and structure
 
@@ -64,7 +67,10 @@ Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and i
 - `art.js` — original inline SVG picture vocabulary
 - `model.js` — samples, timezone logic, filters, validation
 - `app.js` — UI, local persistence, editor, status updates
-- `tests/model.test.js` — seven model test scenarios
+- `dashboard-data.js` — parent-approved public educational baseline and provenance
+- `data-profile.js` — confirmed-data entry point, replaced in sample export
+- `scripts/build-demo.mjs` — sample-only allowlist exporter
+- `tests/` — model, private baseline and demo-isolation checks
 - `docs/QA.md` — verification evidence and limitations
 
 ![Desktop sample dashboard](docs/desktop.jpg)

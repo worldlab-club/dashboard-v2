@@ -1,5 +1,7 @@
 // Original inline SVG illustrations. No remote assets, fonts, or tracking requests.
 const drawing = {
+  globe:
+    '<circle cx="90" cy="80" r="53" fill="#a9c7d1"/><path d="M48 53l25-10 15 18-10 20-16-4-14 17m44-66 15 16 23 7 7 18-20 10-3 29-17 23-13-25-8-15 15-18-3-19" fill="#94b78a"/><path d="M53 130q40 32 79-1M90 142v9M71 154h40"/>',
   plant:
     '<path d="M66 104h48l-9 39H75z" fill="#cc784c"/><path d="M90 104V48"/><path d="M90 80C52 84 49 48 58 47c29-1 35 16 32 33" fill="#76a96b"/><path d="M91 66c-2-32 24-43 35-36 6 23-11 43-35 36" fill="#98bc7d"/><path d="m68 63 22 17m22-35-21 21"/>',
   rocket:

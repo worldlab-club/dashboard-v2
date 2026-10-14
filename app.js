@@ -5,7 +5,6 @@ import {
   ICONS,
   KEY,
   bangkok,
-  seed,
   safeUrl,
   validate,
   validateData,
@@ -15,6 +14,8 @@ import {
   eventList,
 } from "./model.js";
 import { art } from "./art.js";
+import { profile, initialData } from "./data-profile.js";
+const storageKey = `${KEY}-${profile.id}`;
 const $ = (s) => document.querySelector(s),
   esc = (s) =>
     String(s ?? "").replace(
@@ -28,11 +29,11 @@ const $ = (s) => document.querySelector(s),
           "'": "&#39;",
         })[c],
     );
-let data = seed(),
+let data = initialData(),
   storageOK = true,
   loadWarning = false;
 try {
-  const raw = localStorage.getItem(KEY);
+  const raw = localStorage.getItem(storageKey);
   if (raw) data = validateData(JSON.parse(raw));
 } catch {
   storageOK = false;
@@ -54,7 +55,7 @@ function storageLabel() {
 }
 function save() {
   try {
-    localStorage.setItem(KEY, JSON.stringify(data));
+    localStorage.setItem(storageKey, JSON.stringify(data));
     storageOK = true;
     storageLabel();
     return true;
@@ -81,6 +82,11 @@ function saved() {
 function dateLabel(date, opts = { day: "numeric", month: "short" }) {
   return new Date(date + "T12:00:00Z").toLocaleDateString("th-TH", opts);
 }
+function provenance(r) {
+  return r.provenance
+    ? `<small class="provenance">ที่มา: ${esc(r.provenance.source)} · ตรวจ ${esc(r.provenance.checkedOn)}<br>${esc(r.provenance.scope)}</small>`
+    : "";
+}
 function renderFocus() {
   const f = focus(data, today.time, today.day);
   $("#focus").innerHTML = [
@@ -89,7 +95,7 @@ function renderFocus() {
   ]
     .map(
       ([type, r]) =>
-        `<article class="focus-card ${type === "next" ? "next" : ""}"><div><p class="eyebrow">${type === "now" ? "● ตอนนี้ · NOW" : "↗ ต่อไป · UP NEXT"}</p><span class="pill">${r ? (r.sample ? "ตารางตัวอย่าง" : "ตารางของเรา") : "พักได้เลย"}</span><h2>${esc(r?.title || (type === "now" ? "เวลาของเรา" : "ค่อย ๆ ค้นพบ"))}</h2><p>${esc(r ? r.note || "พร้อมแล้ว ลองกันเลย" : type === "now" ? "ไม่มีรายการในช่วงเวลานี้" : "ยังไม่มีกิจกรรมถัดไปวันนี้")}</p>${r ? `<span class="focus-time">${r.start} — ${r.end}</span>` : ""}</div>${art(r?.icon || "rest")}</article>`,
+        `<article class="focus-card ${type === "next" ? "next" : ""}"><div><p class="eyebrow">${type === "now" ? "● ตอนนี้ · NOW" : "↗ ต่อไป · UP NEXT"}</p><span class="pill">${r ? (r.sample ? "ตารางตัวอย่าง" : "ตารางของเรา") : profile.real ? "รอยืนยันตาราง" : "พักได้เลย"}</span><h2>${esc(r?.title || (type === "now" ? "เวลาของเรา" : "ค่อย ๆ ค้นพบ"))}</h2><p>${esc(r ? r.note || "พร้อมแล้ว ลองกันเลย" : profile.real ? "ยังไม่มีเวลาเรียน–สอนที่ยืนยัน ไม่ได้หมายความว่าเป็นเวลาว่าง" : type === "now" ? "ไม่มีรายการในช่วงเวลานี้" : "ยังไม่มีกิจกรรมถัดไปวันนี้")}</p>${r ? `<span class="focus-time">${r.start} — ${r.end}</span>` : ""}</div>${art(r?.icon || "rest")}</article>`,
     )
     .join("");
 }
@@ -111,10 +117,14 @@ function renderSchedule() {
         return `<article class="lesson"><time>${r.start}<small>${r.end}</small></time>${art(r.icon)}<div><h3>${esc(r.title)}</h3><p>${esc(r.note)}${r.sample ? " · ตัวอย่าง" : ""}</p></div>${day === today.day ? `<button class="done" data-done="${esc(r.id)}" aria-pressed="${done}" aria-label="${done ? "ยกเลิกเสร็จแล้ว" : "ทำเสร็จแล้ว"}: ${esc(r.title)}">${done ? "✓" : "○"}</button>` : '<span aria-hidden="true">·</span>'}</article>`;
       })
       .join("") ||
-    '<p class="empty">🌿 ยังไม่มีรายการวันนี้<br>ผู้ปกครองเพิ่มกิจกรรมได้</p>';
+    (profile.real
+      ? '<p class="empty">🗓️ รอยืนยันเวลาเรียน–สอน<br>ยังไม่มีตารางรายวัน จึงไม่แสดงเวลาโดยคาดเดา</p>'
+      : '<p class="empty">🌿 ยังไม่มีรายการวันนี้<br>ผู้ปกครองเพิ่มกิจกรรมได้</p>');
   $("#schedule-caption").textContent =
     view === "teach"
-      ? "มุมมองผู้สอน · ตารางประจำสัปดาห์ตัวอย่าง"
+      ? profile.real
+        ? "มุมมองผู้สอน · ยังไม่ยืนยันรายวิชา/คอร์สและเวลา"
+        : "มุมมองผู้สอน · ตารางประจำสัปดาห์ตัวอย่าง"
       : `ตารางประจำสัปดาห์ · ${day === today.day ? "ทำเครื่องหมายเมื่อเสร็จได้" : "เลือกวันวันนี้เพื่อทำเครื่องหมายเสร็จ"} · เวลาไทย`;
 }
 function renderCalendar() {
@@ -144,7 +154,7 @@ function renderCalendar() {
     (items
       .map(
         (e) =>
-          `<article class="event"><span class="event-icon" aria-hidden="true">${KINDS[e.kind].split(" ")[0]}</span><div><b>${esc(e.title)}</b><small>${dateLabel(e.date)} · ${KINDS[e.kind]}${e.sample ? " · ตัวอย่าง" : ""}</small><small>${esc(e.note)}</small></div></article>`,
+          `<article class="event"><span class="event-icon" aria-hidden="true">${KINDS[e.kind].split(" ")[0]}</span><div><b>${esc(e.title)}</b><small>${dateLabel(e.date)} · ${KINDS[e.kind]}${e.sample ? " · ตัวอย่าง" : ""}</small><small>${esc(e.note)}</small>${provenance(e)}</div></article>`,
       )
       .join("") || '<p class="empty">ไม่มีรายการในช่วงที่เลือก</p>');
   $("#all-events").hidden = !selectedDate;
@@ -157,12 +167,12 @@ function renderCards() {
           `<button class="project-card" data-project="${esc(p.id)}" aria-label="ดูโปรเจค ${esc(p.title)}"><div class="picture ${colors[i % 3]}"><span class="number">PROJECT / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><span class="status">${STATUS[p.status]}</span><h3>${esc(p.title)}</h3><p>${esc(p.update || p.note)}</p><div class="progress-label"><span>${p.sample ? "ความคืบหน้าตัวอย่าง" : "ความคืบหน้า"}</span><b>${p.progress}%</b></div><progress class="progress" aria-label="ความคืบหน้า ${esc(p.title)}" value="${p.progress}" max="100">${p.progress}%</progress></div></button>`,
       )
       .join("") ||
-    '<p class="empty">ยังไม่มีโปรเจค · เพิ่มไอเดียแรกได้ในมุมผู้ปกครอง</p>';
+    '<p class="empty">🛠️ รอยืนยันโปรเจคงานอดิเรกและสถานะจริง<br>ยังไม่ใส่ชื่อโปรเจคหรือเปอร์เซ็นต์ความคืบหน้าโดยคาดเดา</p>';
   $("#interest-grid").innerHTML =
     data.interests
       .map((p, i) => {
         const url = safeUrl(p.url);
-        return `<article class="interest-card"><div class="picture ${["blue", "", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
+        return `<article class="interest-card"><div class="picture ${["blue", "", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${provenance(p)}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
       })
       .join("") ||
     '<p class="empty">อยากรู้เรื่องอะไร? เพิ่มได้ในมุมผู้ปกครอง</p>';
@@ -175,9 +185,32 @@ function render() {
     ...data.interests,
   ];
   const mixed = all.some((r) => !r.sample);
-  $(".notice").innerHTML = mixed
-    ? "<span>🧪 <b>โลกทดลอง · มีข้อมูลที่แก้ไขบนเครื่องนี้</b></span><span>รายการที่มีป้ายตัวอย่างยังไม่ใช่ข้อมูลจริง</span>"
-    : "<span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>";
+  $(".notice").innerHTML = profile.real
+    ? "<span>🌍 <b>ข้อมูลที่ยืนยันแล้ว · เปิดสาธารณะ</b></span><span>ส่วนที่ยังไม่ยืนยันจะแสดงว่ารอข้อมูล</span>"
+    : mixed
+      ? "<span>🧪 <b>เดโมตัวอย่าง · มีข้อมูลที่แก้ไขบนเครื่องนี้</b></span><span>รายการตัวอย่างไม่ใช่ข้อมูลจริง</span>"
+      : "<span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>";
+  $("#context").hidden = !profile.term;
+  if (profile.term) {
+    const t = profile.term;
+    $("#context").innerHTML =
+      `<div><p class="eyebrow">CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว</p><h2>${esc(t.school)} · ${esc(t.level)} · ${esc(t.term)}</h2><p>${dateLabel(t.start, { day: "numeric", month: "long", year: "numeric" })} — ${dateLabel(t.end, { day: "numeric", month: "long", year: "numeric" })} · AY ${esc(t.academicYear)}</p><p class="quiet">ที่มา: ${esc(t.source)}<br>${esc(t.scope)}</p><p class="pending">${esc(profile.pending)}</p></div>`;
+  }
+  $("#schedule .section-head .sample").textContent = profile.real
+    ? "รอเวลาเรียนจริง"
+    : "ตัวอย่าง";
+  $("#calendar .section-head .sample").textContent = profile.real
+    ? "ช่วงเทอมยืนยันแล้ว"
+    : "ตัวอย่าง";
+  $("#projects .section-head .sample").textContent = profile.real
+    ? "ยังไม่ยืนยันสถานะจริง"
+    : "โปรเจคตัวอย่าง · กดเพื่อดู / อัปเดต";
+  $("#interests .section-head .sample").textContent = profile.real
+    ? "แอปจริง · ยังไม่ยืนยันความสนใจ"
+    : "ความสนใจตัวอย่าง";
+  $("#editor-disclosure").textContent = profile.real
+    ? "ข้อมูลเริ่มต้นมีเฉพาะช่วงเทอมที่ผู้ปกครองยืนยันและแอป World Lab ที่มีอยู่จริง · รายวิชา เวลา วันสอบ และสถานะส่วนตัวยังไม่ยืนยัน"
+    : "เริ่มจากข้อมูลตัวอย่างทั้งหมด · แก้ไขรายการได้เฉพาะบนเครื่องนี้";
   renderFocus();
   renderSchedule();
   renderCalendar();
@@ -392,6 +425,11 @@ $("#record-form").onsubmit = (e) => {
     title: v.title.trim(),
     note: v.note.trim(),
     sample: v.sample === "yes",
+    provenance: {
+      source: "ผู้ปกครองแก้ไขในเบราว์เซอร์นี้",
+      checkedOn: today.date,
+      scope: "ยังไม่ได้ตรวจแหล่งต้นฉบับหลังการแก้ไข",
+    },
   };
   if (c !== "events") r.icon = v.icon;
   if (c === "schedule")
@@ -427,5 +465,5 @@ render();
 setInterval(tick, 15000);
 if (loadWarning)
   toast(
-    "อ่านข้อมูลเดิมไม่ได้ กำลังแสดงตัวอย่าง — ตรวจพื้นที่จัดเก็บของเบราว์เซอร์",
+    "อ่านข้อมูลเดิมไม่ได้ กำลังแสดงข้อมูลเริ่มต้นของโปรเจค — ตรวจพื้นที่จัดเก็บของเบราว์เซอร์",
   );

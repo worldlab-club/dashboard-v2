@@ -10,6 +10,7 @@ export const KINDS = {
   exam: "✏️ วันสอบ",
 };
 export const ICONS = {
+  globe: "🌍 โลก",
   book: "📖 อ่าน",
   math: "🧮 คณิต",
   science: "🔬 วิทย์",
