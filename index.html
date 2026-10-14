@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="World Lab v2 — a picture-first learning dashboard. Sample data, private browser-local editing."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>World Lab · Dashboard v2</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+    <header>
+      <a class="brand" href="./"
+        ><span class="brand-mark" aria-hidden="true">✳</span
+        ><span>World Lab<small>EVERY DAY IS A LITTLE DISCOVERY</small></span></a
+      >
+      <div class="header-right">
+        <span class="version">DASHBOARD / V2</span
+        ><button id="edit">⚙ <span>ผู้ปกครอง</span></button>
+      </div>
+    </header>
+    <main id="main">
+      <div class="notice">
+        <span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span
+        ><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>
+      </div>
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">LET’S EXPLORE TOGETHER</p>
+          <h1>วันนี้ ค้นพบอะไรดี<span class="orange">?</span></h1>
+          <p id="today-label"></p>
+        </div>
+        <div class="clock">
+          <span aria-hidden="true">☀</span>
+          <div>
+            <strong id="clock"></strong><small>เวลาไทย · Bangkok</small>
+          </div>
+        </div>
+      </section>
+      <nav class="jump" aria-label="ไปยังส่วนต่าง ๆ">
+        <a href="#schedule">🗓️ <span>แผนวันนี้</span></a
+        ><a href="#calendar">📅 <span>ปฏิทิน</span></a
+        ><a href="#projects">🛠️ <span>ลงมือทำ</span></a
+        ><a href="#interests">🔭 <span>อยากรู้</span></a>
+      </nav>
+      <section
+        id="focus"
+        class="focus-grid"
+        aria-label="กิจกรรมตอนนี้และถัดไป"
+      ></section>
+      <div class="dashboard-grid">
+        <section id="schedule" class="panel schedule">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">A LITTLE RHYTHM FOR THE DAY</p>
+              <h2>แผนของเรา <span>🗓️</span></h2>
+            </div>
+            <span class="sample">ตัวอย่าง</span>
+          </div>
+          <div
+            class="segments"
+            id="schedule-tabs"
+            role="group"
+            aria-label="มุมมองตาราง"
+          >
+            <button data-view="day" aria-pressed="true">วันนี้</button
+            ><button data-view="class" aria-pressed="false">ตารางเรียน</button
+            ><button data-view="teach" aria-pressed="false">ตารางสอน</button>
+          </div>
+          <div
+            class="day-picker"
+            id="day-picker"
+            role="group"
+            aria-label="เลือกวัน"
+          ></div>
+          <div id="timeline"></div>
+          <p class="quiet" id="schedule-caption"></p>
+        </section>
+        <section id="calendar" class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">DAYS TO LOOK FORWARD TO</p>
+              <h2>ปฏิทินโรงเรียน</h2>
+            </div>
+            <span class="sample">ตัวอย่าง</span>
+          </div>
+          <div class="month-nav">
+            <button id="prev-month" aria-label="เดือนก่อนหน้า">←</button>
+            <h3 id="month-label"></h3>
+            <button id="next-month" aria-label="เดือนถัดไป">→</button
+            ><button id="this-month">เดือนนี้</button>
+          </div>
+          <div
+            class="calendar-grid"
+            id="month-grid"
+            role="group"
+            aria-label="เลือกวันที่"
+          ></div>
+          <div
+            class="legend"
+            id="event-filters"
+            role="group"
+            aria-label="กรองประเภทวัน"
+          >
+            <button data-kind="all" aria-pressed="true">ทั้งหมด</button
+            ><button data-kind="holiday" aria-pressed="false">🌴 วันหยุด</button
+            ><button data-kind="important" aria-pressed="false">
+              ⭐ วันสำคัญ</button
+            ><button data-kind="exam" aria-pressed="false">✏️ วันสอบ</button>
+          </div>
+          <div id="events" aria-live="polite"></div>
+          <button class="text-button" id="all-events">ดูทั้งเดือน</button>
+        </section>
+      </div>
+      <section id="projects">
+        <div class="section-head spacious">
+          <div>
+            <p class="eyebrow">SMALL STEPS, BIG IDEAS</p>
+            <h2>ห้องทดลองของเรา <span>🛠️</span></h2>
+          </div>
+          <span class="sample">โปรเจคตัวอย่าง · กดเพื่อดู / อัปเดต</span>
+        </div>
+        <div id="project-grid" class="cards three"></div>
+      </section>
+      <section id="interests">
+        <div class="section-head spacious">
+          <div>
+            <p class="eyebrow">FOLLOW YOUR CURIOSITY</p>
+            <h2>ช่วงนี้อยากรู้เรื่อง… <span>🔭</span></h2>
+          </div>
+          <span class="sample">ความสนใจตัวอย่าง</span>
+        </div>
+        <div id="interest-grid" class="cards three"></div>
+      </section>
+      <section class="play-panel">
+        <div>
+          <p class="eyebrow">THE WORLD LAB TOOLBOX</p>
+          <h2>ลองเล่น ลองเรียน</h2>
+        </div>
+        <div class="toolbox">
+          <a
+            href="https://worldlab-club.github.io/world-map/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >🌍<span>แผนที่โลก ↗</span></a
+          ><a
+            href="https://worldlab-club.github.io/chess/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >♟️<span>หมากรุก ↗</span></a
+          ><a
+            href="https://worldlab-club.github.io/abacus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >🧮<span>ลูกคิด ↗</span></a
+          ><a
+            href="https://worldlab-club.github.io/multiplication-table/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >✖️<span>สูตรคูณ ↗</span></a
+          ><a
+            href="https://worldlab-club.github.io/comm-lab/thai-writing"
+            target="_blank"
+            rel="noopener noreferrer"
+            >✍️<span>เขียนไทย ↗</span></a
+          ><a
+            href="https://worldlab-club.github.io/comm-lab/chinese-writing.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            >🖌️<span>เขียนจีน ↗</span></a
+          >
+        </div>
+      </section>
+      <footer>
+        <span class="brand-foot"
+          >✳ World Lab <small>GROW AT YOUR OWN PACE.</small></span
+        >
+        <p id="storage-status">
+          🔒 ข้อมูลแก้ไขเก็บในเบราว์เซอร์นี้เท่านั้น ไม่ซิงค์ GitHub ·
+          ไม่มีการติดตาม
+        </p>
+      </footer>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="detail-dialog" aria-labelledby="detail-title">
+      <button class="close" data-close aria-label="ปิด">×</button>
+      <div id="detail"></div>
+    </dialog>
+    <dialog id="editor" aria-labelledby="editor-title">
+      <div class="editor-head">
+        <div>
+          <p class="eyebrow">GROWN-UP CORNER</p>
+          <h2 id="editor-title">จัดการโลกการเรียนรู้</h2>
+        </div>
+        <button class="close" data-close aria-label="ปิด">×</button>
+      </div>
+      <p class="privacy">
+        🔒 บันทึกเฉพาะเบราว์เซอร์นี้ คนที่ใช้โปรไฟล์เดียวกันอาจเห็นข้อมูลได้
+        ไม่มีการอัปโหลดหรือซิงค์ ข้อมูลอาจหายเมื่อเคลียร์เบราว์เซอร์
+      </p>
+      <div class="editor-toolbar">
+        <label
+          >หมวด<select id="edit-category">
+            <option value="schedule">ตารางกิจกรรม</option>
+            <option value="events">ปฏิทินโรงเรียน</option>
+            <option value="projects">โปรเจคงานอดิเรก</option>
+            <option value="interests">ความสนใจ / YouTube</option>
+          </select></label
+        ><button id="add-record" class="primary">＋ เพิ่มรายการ</button>
+      </div>
+      <div id="record-list"></div>
+      <form id="record-form" hidden></form>
+      <p class="quiet">
+        เริ่มจากข้อมูลตัวอย่างทั้งหมด · เมื่อต้องการใช้จริง ให้แก้ไข /
+        ลบรายการตัวอย่างในแต่ละหมวด
+      </p>
+    </dialog>
+  </body>
+</html>
