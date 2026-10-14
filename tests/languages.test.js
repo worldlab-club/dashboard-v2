@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {translate,stackedParts} from '../i18n.js';
+import {translate,stackedParts,usesTitleLanguages} from '../i18n.js';
 import {labels} from '../translations.js';
 import {vocabulary,findWord} from '../vocabulary.js';
 import {readFileSync} from 'node:fs';
@@ -15,7 +15,9 @@ test('all fixed labels have English and Simplified Chinese translations',()=>{
   assert.equal(translate('🌴 วันหยุด','zh-Hans'),'🌴 假期');
   assert.equal(translate('โรงเรียนของน้อง','en'),'โรงเรียนของน้อง');
 });
-test('simultaneous language parts ignore the legacy preference and contain all three labels',()=>{
+test('only headings use supporting languages; preference and selector stay removed',()=>{
+  for(const tag of ['H1','H2','H3']) assert(usesTitleLanguages(tag));
+  for(const tag of ['P','BUTTON','LABEL','OPTION','TIME','SPAN']) assert(!usesTitleLanguages(tag));
   assert.deepEqual(stackedParts('ตารางเรียน'),{en:'Classes',th:'ตารางเรียน',zh:'课程表'});
   const code=readFileSync(new URL('../i18n.js',import.meta.url),'utf8');
   const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');

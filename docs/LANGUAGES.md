@@ -1,18 +1,14 @@
-# Simultaneous interface languages and Chinese learning
+# English interface with Thai and Chinese titles
 
-English is primary, with smaller Thai and Simplified Chinese directly underneath. All are shown together; the language selector is removed. The old `worldlab-ui-language-v1` preference is never read, so it cannot hide a language. Personal data keys and stored records are unchanged. Date values use English formatting; calendar weekday labels show all three languages. World Lab brand names remain intact.
+English is primary throughout. Only fixed H1/H2/H3 page, section and widget titles show smaller Thai and Simplified Chinese underneath. Supporting copy, captions, notices, buttons, form labels/options, calendar weekday labels, dates/time and status details are English-only. Brand names remain intact. No language selector is present and the legacy preference is never read. This replaces the dense all-label presentation.
 
-The 183 fixed-label catalog entries cover headings, navigation, filters, empty states, privacy notices, parent editor labels, validation and status controls. Thai translations are supplied for the English interface captions too. English label text is larger or bolder; secondary labels are at least 13px, with larger type for the hero/headings. No language is shown only on hover.
+The 183-entry translation catalog remains available internally. Localization only adds a three-language stack inside headings; body text and accessibility labels use English. Input/textarea values and `data-original` boundaries remain excluded. Record titles, notes, term metadata and source evidence retain their original language rather than generating unknown translations. Data storage keys and records are unchanged. Dates use English formatting and the clock remains Asia/Bangkok.
 
-Records, baseline titles/notes, term metadata and source evidence keep their original text, as disclosed on the page. No unknown personal record is automatically translated. Input and textarea values and `data-original` render boundaries are excluded. There is no remote translation service or child-data transmission.
+## Chinese learning on titles
 
-Native select menus show the three names inline because HTML option rows do not support stacked markup. The selected option is also displayed in a fully wrapped English / Thai / Chinese stack below the control, so long labels can be read at mobile widths. Native date/time picker internals follow browser conventions. Dates and numeric values are data, not translated vocabulary.
+Underlined Chinese title words are independent buttons. Whole-word meaning appears before per-character information: Simplified, Traditional, tone-marked pinyin, Thai/English meanings and contextual character readings. The 42-word curated dictionary remains, with popups offered where a remaining title contains a dictionary entry. There is no longer a separate vocabulary drawer or learning target on menu actions. Unknown phrases are not automatically segmented or translated.
 
-## Learning interaction
-
-Underlined Chinese words are real buttons. Whole-word dictionary entries are preferred to single-character readings. Non-action headings can contain word buttons; for navigation and filter labels, Chinese learning buttons are separate siblings outside the original action. English/Thai navigation or filter activation remains direct. There are no nested interactive buttons/links. The always-available vocabulary panel contains all **42 contextual words**.
-
-Each modal preserves Simplified, Traditional, tone-marked pinyin, Thai/English whole-word meanings, then per-character in-word readings and glosses. Notes flag polyphony and simplified/traditional ambiguity. The popup is intentionally a Chinese learning object, rather than a translated record. Tap/click, Enter/Space, close button, Escape, backdrop dismissal and return focus are supported. Native modal background inertness and viewport-limited internal scrolling remain.
+Popup learning content intentionally contains Chinese forms and Thai/English meanings, while popup controls and explanatory labels use English. Tap/click or Enter/Space opens a word card. Close, Escape and backdrop click dismiss it; focus returns to its connected opener. Long cards remain viewport-limited with internal scrolling. Navigation/filter controls contain no learning button and execute their original actions directly.
 
 ## Sources and editorial limits
 
@@ -23,10 +19,10 @@ Each modal preserves Simplified, Traditional, tone-marked pinyin, Thai/English w
 
 ## Verification
 
-13 automated tests cover the full catalog, simultaneous language parts, absence of any preference read / selector, 42-word coverage, contextual readings/forms, existing data/model validation and sample-only export isolation. Syntax and sample export checks pass.
+13 automated tests cover all translation entries, title-only language policy (H1/H2/H3 versus body/buttons/labels/options), absence of preference reads/selector, contextual vocabulary and existing model/data/sample-export regressions. Syntax and sample export checks pass.
 
-Local browser at 320px, 390px and desktop: three languages visible with the prior saved Chinese preference still present; no horizontal overflow; secondary text measures 13–16px. Headings, action groups, calendar weekday labels and long form labels reviewed. Native selected-option previews wrap without widening dialogs. No nested buttons/links. Picture-first current/next widgets are above navigation and parent provenance details.
+Local browser at 320px, 390px and desktop: zero supporting-language stacks outside headings; no nested/duplicated title stacks; no horizontal overflow. Forms/options and supporting text are English-only, and long form content fits the dialog. Removed the three-language option previews, duplicated body lines and expanded multilingual navigation spacing. The illustrated current/next widgets retain their prominence and CI.
 
-Verified tap and Enter opening from the actual Chinese text, Escape, close/reopen, backdrop dismissal and focus return. Chinese 课程表 learning action did not alter the active Classes filter. Created a sample title `QA stacked วันนี้ 学校` and note `เรียน 保存 — original text`; both remained verbatim after saving/reload. Completion, calendar filtering, project status and edit/delete passed. Test records were removed via UI and never committed. No console warnings/errors.
+Verified Chinese title tap, Enter, Escape, focus return, close/reopen and outside dismissal. Created a sample record `QA title-only วันนี้ 学校` / `เรียน 保存 unchanged`; saved text remained verbatim after reload. Completion, day/teaching views, exam filtering, project status, edit/delete passed. Test records were removed via UI and never committed. No console errors/warnings.
 
-Entry CSS/font CSS/script and changed module dependencies are versioned for this release to avoid pairing new markup with the old cached language-switching module. Previously open pages may need a normal reload for current HTML.
+Entry script/styles/font CSS and changed module dependencies use a release version to avoid old cached language presentation. Previously open pages may need a normal reload for updated HTML.

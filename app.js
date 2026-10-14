@@ -1,4 +1,4 @@
-import { initLanguages, locale, translate } from "./i18n.js?v=stacked-1";
+import { initLanguages, locale, translate } from "./i18n.js?v=titles-1";
 import {
   DAYS,
   STATUS,

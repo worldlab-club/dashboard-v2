@@ -75,6 +75,6 @@ Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and i
 
 ![Desktop sample dashboard](docs/desktop.jpg)
 
-### Simultaneous languages and Chinese vocabulary
+### English interface with Thai and Chinese titles
 
-English leads, with smaller Thai and Simplified Chinese labels directly underneath on the same page. There is no language selector. Previous language preferences are ignored; saved personal records are unchanged. Underlined Chinese words open the 42 contextual learning cards with Traditional forms, pinyin, Thai/English meanings and character details. Chinese learning taps stay separate from navigation and filter actions. Personal records and source evidence retain their original language. See [coverage, sources and limitations](docs/LANGUAGES.md).
+English is primary throughout. Only fixed page, section and widget headings have smaller Thai and Simplified Chinese underneath. Buttons, forms/options, dates, status labels and supporting copy are English-only. Underlined Chinese title words open the existing learning cards with Traditional forms, pinyin, Thai/English meanings and character details. No language selector or stored preference controls the presentation. Personal records and source notes retain their original language. See [coverage and limitations](docs/LANGUAGES.md).

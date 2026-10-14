@@ -77,3 +77,7 @@ See [LANGUAGES.md](LANGUAGES.md) for coverage, explicit original-language bounda
 ## Simultaneous language correction
 
 English-primary stacked Thai/Chinese replaces the selector; prior preference ignored. See LANGUAGES.md for 320/390px and desktop checks, independent Chinese learning controls, form previews and unchanged personal records.
+
+## Title-only language refinement
+
+English body/controls/forms/options; smaller Thai/Chinese only on fixed H1/H2/H3 titles. No global vocabulary drawer or option previews. Local 320/390px and desktop checks passed with no duplicate title stacks or horizontal overflow; Chinese title popups and core editing/filter/status interactions verified. See LANGUAGES.md.

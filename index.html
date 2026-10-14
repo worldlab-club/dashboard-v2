@@ -12,10 +12,10 @@
       content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
     />
     <title>World Lab · Dashboard v2</title>
-    <link rel="stylesheet" href="assets/fonts/fonts.css?v=stacked-1" />
-    <link rel="stylesheet" href="styles.css?v=stacked-1" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css?v=titles-1" />
+    <link rel="stylesheet" href="styles.css?v=titles-1" />
     <link rel="icon" href="assets/world-lab-logo.png" type="image/png" />
-    <script type="module" src="app.js?v=stacked-1"></script>
+    <script type="module" src="app.js?v=titles-1"></script>
   </head>
   <body>
     <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
@@ -64,7 +64,7 @@
         <span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span
         ><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>
       </div>
-      <p id="language-note" class="language-note"></p><details id="vocabulary" class="vocabulary"><summary>📖 Vocabulary · คำศัพท์ · 词语学习</summary><p><span lang="en">Tap Chinese words to learn. Menu actions stay separate.</span><span lang="th">กดคำจีนเพื่อเรียนคำศัพท์ แยกจากปุ่มเมนู</span><span lang="zh-Hans">点击中文词语学习，菜单操作保持独立。</span></p><div id="word-list" class="word-list"></div></details>
+      <p id="language-note" class="language-note"></p>
       <section
         id="context"
         class="context-panel"
@@ -219,7 +219,7 @@
         </p>
       </footer>
     </main>
-    <dialog id="word-dialog" aria-labelledby="word-title"><button type="button" id="word-close" class="close" aria-label="关闭 / ปิด / Close">×</button><div id="word-content"></div></dialog>
+    <dialog id="word-dialog" aria-labelledby="word-title"><button type="button" id="word-close" class="close" aria-label="Close">×</button><div id="word-content"></div></dialog>
     <div id="toast" role="status" aria-live="polite"></div>
     <dialog id="detail-dialog" aria-labelledby="detail-title">
       <button class="close" data-close aria-label="ปิด">×</button>
