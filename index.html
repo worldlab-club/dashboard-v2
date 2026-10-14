@@ -31,7 +31,7 @@
         <span>World Lab<small>LEARN. BUILD. EXPLORE.</small></span></a
       >
       <div class="header-right">
-        <span class="version">DASHBOARD / V2</span
+        <label class="language-tools"><span>🌐</span><select id="language" aria-label="Language / ภาษา / 语言"><option value="th">ไทย</option><option value="en">English</option><option value="zh-Hans">中文（简体）</option></select></label><span class="version">DASHBOARD / V2</span
         ><button id="edit">⚙ <span>ผู้ปกครอง</span></button>
       </div>
     </header>
@@ -40,7 +40,7 @@
         <span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span
         ><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>
       </div>
-      <section class="welcome">
+      <p id="language-note" class="language-note"></p><details id="vocabulary" class="vocabulary" hidden><summary>📖 词语学习 · คำศัพท์ · Vocabulary</summary><p>点击词语学习发音和含义。菜单和链接仍然直接执行原有操作。</p><div id="word-list" class="word-list"></div></details><section class="welcome">
         <div>
           <p class="eyebrow">WORLD LAB · LEARNING SPACE</p>
           <h1>วันนี้ ค้นพบอะไรดี<span class="orange">?</span></h1>
@@ -218,6 +218,7 @@
         </p>
       </footer>
     </main>
+    <dialog id="word-dialog" aria-labelledby="word-title"><button type="button" id="word-close" class="close" aria-label="关闭 / ปิด / Close">×</button><div id="word-content"></div></dialog>
     <div id="toast" role="status" aria-live="polite"></div>
     <dialog id="detail-dialog" aria-labelledby="detail-title">
       <button class="close" data-close aria-label="ปิด">×</button>

@@ -1,3 +1,4 @@
+import { initLanguages, locale, translate } from "./i18n.js";
 import {
   DAYS,
   STATUS,
@@ -47,6 +48,7 @@ let today = bangkok(),
   selectedDate = null,
   editing = null,
   detailId = null;
+const original = (value) => `<span data-original>${esc(value)}</span>`;
 const colors = ["", "blue", "peach"];
 function storageLabel() {
   $("#storage-status").textContent = storageOK
@@ -80,11 +82,11 @@ function saved() {
   );
 }
 function dateLabel(date, opts = { day: "numeric", month: "short" }) {
-  return new Date(date + "T12:00:00Z").toLocaleDateString("th-TH", opts);
+  return new Date(date + "T12:00:00Z").toLocaleDateString(locale(), opts);
 }
 function provenance(r) {
   return r.provenance
-    ? `<details class="source-details"><summary>ที่มา / สิ่งที่ยังไม่ยืนยัน</summary><small class="provenance">${esc(r.provenance.source)} · ตรวจ ${esc(r.provenance.checkedOn)}<br>${esc(r.provenance.scope)}</small></details>`
+    ? `<details class="source-details"><summary>ที่มา / สิ่งที่ยังไม่ยืนยัน</summary><small class="provenance">${original(r.provenance.source)} · ตรวจ ${esc(r.provenance.checkedOn)}<br>${original(r.provenance.scope)}</small></details>`
     : "";
 }
 function renderFocus() {
@@ -95,7 +97,7 @@ function renderFocus() {
   ]
     .map(
       ([type, r]) =>
-        `<article class="focus-card ${type === "next" ? "next" : ""}"><div><p class="eyebrow">${type === "now" ? "● ตอนนี้ · NOW" : "↗ ต่อไป · UP NEXT"}</p><span class="pill">${r ? (r.sample ? "ตารางตัวอย่าง" : "ตารางของเรา") : profile.real ? "รอยืนยันตาราง" : "พักได้เลย"}</span><h2>${esc(r?.title || (type === "now" ? "เวลาของเรา" : "ค่อย ๆ ค้นพบ"))}</h2><p>${esc(r ? r.note || "พร้อมแล้ว ลองกันเลย" : profile.real ? "ยังไม่มีเวลาเรียน–สอนที่ยืนยัน ไม่ได้หมายความว่าเป็นเวลาว่าง" : type === "now" ? "ไม่มีรายการในช่วงเวลานี้" : "ยังไม่มีกิจกรรมถัดไปวันนี้")}</p>${r ? `<span class="focus-time">${r.start} — ${r.end}</span>` : ""}</div>${art(r?.icon || "rest")}</article>`,
+        `<article class="focus-card ${type === "next" ? "next" : ""}"><div><p class="eyebrow">${type === "now" ? "● ตอนนี้ · NOW" : "↗ ต่อไป · UP NEXT"}</p><span class="pill">${r ? (r.sample ? "ตารางตัวอย่าง" : "ตารางของเรา") : profile.real ? "รอยืนยันตาราง" : "พักได้เลย"}</span><h2>${r ? original(r.title) : (type === "now" ? "เวลาของเรา" : "ค่อย ๆ ค้นพบ")}</h2><p>${r ? (r.note ? original(r.note) : "พร้อมแล้ว ลองกันเลย") : (profile.real ? "ยังไม่มีเวลาเรียน–สอนที่ยืนยัน ไม่ได้หมายความว่าเป็นเวลาว่าง" : type === "now" ? "ไม่มีรายการในช่วงเวลานี้" : "ยังไม่มีกิจกรรมถัดไปวันนี้")}</p>${r ? `<span class="focus-time">${r.start} — ${r.end}</span>` : ""}</div>${art(r?.icon || "rest")}</article>`,
     )
     .join("");
 }
@@ -114,7 +116,7 @@ function renderSchedule() {
     records
       .map((r) => {
         const done = !!data.completed[`${today.date}:${r.id}`];
-        return `<article class="lesson"><time>${r.start}<small>${r.end}</small></time>${art(r.icon)}<div><h3>${esc(r.title)}</h3><p>${esc(r.note)}${r.sample ? " · ตัวอย่าง" : ""}</p></div>${day === today.day ? `<button class="done" data-done="${esc(r.id)}" aria-pressed="${done}" aria-label="${done ? "ยกเลิกเสร็จแล้ว" : "ทำเสร็จแล้ว"}: ${esc(r.title)}">${done ? "✓" : "○"}</button>` : '<span aria-hidden="true">·</span>'}</article>`;
+        return `<article class="lesson"><time>${r.start}<small>${r.end}</small></time>${art(r.icon)}<div><h3>${original(r.title)}</h3><p>${original(r.note)}${r.sample ? " · ตัวอย่าง" : ""}</p></div>${day === today.day ? `<button class="done" data-record-label data-done="${esc(r.id)}" aria-pressed="${done}" aria-label="${translate(done ? "ยกเลิกเสร็จแล้ว" : "ทำเสร็จแล้ว")}: ${esc(r.title)}">${done ? "✓" : "○"}</button>` : '<span aria-hidden="true">·</span>'}</article>`;
       })
       .join("") ||
     (profile.real
@@ -139,7 +141,7 @@ function renderCalendar() {
     Array.from({ length: count }, (_, i) => {
       const date = `${month}-${String(i + 1).padStart(2, "0")}`;
       const events = eventList(data, month, kind, date);
-      return `<button class="date ${date === today.date ? "today" : ""} ${date === selectedDate ? "selected" : ""}" data-date="${date}" aria-pressed="${date === selectedDate}" ${date === today.date ? 'aria-current="date"' : ""} aria-label="${dateLabel(date, { day: "numeric", month: "long", year: "numeric" })}${events.length ? " · " + events.map((e) => KINDS[e.kind] + " " + esc(e.title)).join(", ") : ""}">${i + 1}<span class="dots">${[...new Set(events.map((e) => e.kind))].map((k) => `<i class="dot ${k}"></i>`).join("")}</span></button>`;
+      return `<button data-record-label class="date ${date === today.date ? "today" : ""} ${date === selectedDate ? "selected" : ""}" data-date="${date}" aria-pressed="${date === selectedDate}" ${date === today.date ? 'aria-current="date"' : ""} aria-label="${dateLabel(date, { day: "numeric", month: "long", year: "numeric" })}${events.length ? " · " + events.map((e) => translate(KINDS[e.kind]) + " " + esc(e.title)).join(", ") : ""}">${i + 1}<span class="dots">${[...new Set(events.map((e) => e.kind))].map((k) => `<i class="dot ${k}"></i>`).join("")}</span></button>`;
     }).join("");
   document
     .querySelectorAll("[data-kind]")
@@ -154,7 +156,7 @@ function renderCalendar() {
     (items
       .map(
         (e) =>
-          `<article class="event"><span class="event-icon" aria-hidden="true">${KINDS[e.kind].split(" ")[0]}</span><div><b>${esc(e.title)}</b><small>${dateLabel(e.date)} · ${KINDS[e.kind]}${e.sample ? " · ตัวอย่าง" : ""}</small><small>${esc(e.note)}</small>${provenance(e)}</div></article>`,
+          `<article class="event"><span class="event-icon" aria-hidden="true">${KINDS[e.kind].split(" ")[0]}</span><div><b>${original(e.title)}</b><small>${dateLabel(e.date)} · ${KINDS[e.kind]}${e.sample ? " · ตัวอย่าง" : ""}</small><small>${original(e.note)}</small>${provenance(e)}</div></article>`,
       )
       .join("") || '<p class="empty">ไม่มีรายการในช่วงที่เลือก</p>');
   $("#all-events").hidden = !selectedDate;
@@ -164,7 +166,7 @@ function renderCards() {
     data.projects
       .map(
         (p, i) =>
-          `<button class="project-card" data-project="${esc(p.id)}" aria-label="ดูโปรเจค ${esc(p.title)}"><div class="picture ${colors[i % 3]}"><span class="number">PROJECT / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><span class="status">${STATUS[p.status]}</span><h3>${esc(p.title)}</h3><p>${esc(p.update || p.note)}</p><div class="progress-label"><span>${p.sample ? "ความคืบหน้าตัวอย่าง" : "ความคืบหน้า"}</span><b>${p.progress}%</b></div><progress class="progress" aria-label="ความคืบหน้า ${esc(p.title)}" value="${p.progress}" max="100">${p.progress}%</progress></div></button>`,
+          `<button class="project-card" data-record-label data-project="${esc(p.id)}" aria-label="${translate("ดูโปรเจค")} ${esc(p.title)}"><div class="picture ${colors[i % 3]}"><span class="number">PROJECT / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><span class="status">${STATUS[p.status]}</span><h3>${original(p.title)}</h3><p>${original(p.update || p.note)}</p><div class="progress-label"><span>${p.sample ? "ความคืบหน้าตัวอย่าง" : "ความคืบหน้า"}</span><b>${p.progress}%</b></div><progress class="progress" data-record-label aria-label="${translate("ความคืบหน้า")} ${esc(p.title)}" value="${p.progress}" max="100">${p.progress}%</progress></div></button>`,
       )
       .join("") ||
     '<p class="empty">🛠️ รอยืนยันโปรเจคงานอดิเรกและสถานะจริง<br>ยังไม่ใส่ชื่อโปรเจคหรือเปอร์เซ็นต์ความคืบหน้าโดยคาดเดา</p>';
@@ -172,7 +174,7 @@ function renderCards() {
     data.interests
       .map((p, i) => {
         const url = safeUrl(p.url);
-        return `<article class="interest-card"><div class="picture ${["blue", "yellow", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${provenance(p)}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
+        return `<article class="interest-card"><div class="picture ${["blue", "yellow", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${original(p.title)}</h3><p>${original(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${provenance(p)}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
       })
       .join("") ||
     '<p class="empty">อยากรู้เรื่องอะไร? เพิ่มได้ในมุมผู้ปกครอง</p>';
@@ -194,7 +196,7 @@ function render() {
   if (profile.term) {
     const t = profile.term;
     $("#context").innerHTML =
-      `<div><p class="eyebrow">CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว</p><h2>${esc(t.school)} · ${esc(t.level)} · ${esc(t.term)}</h2><p>${dateLabel(t.start, { day: "numeric", month: "long", year: "numeric" })} — ${dateLabel(t.end, { day: "numeric", month: "long", year: "numeric" })} · AY ${esc(t.academicYear)}</p><details class="source-details"><summary>ที่มาและขอบเขตข้อมูล</summary><p class="quiet">${esc(t.source)}<br>${esc(t.scope)}</p></details><p class="pending">${esc(profile.pending)}</p></div>`;
+      `<div><p class="eyebrow">CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว</p><h2>${esc(t.school)} · ${esc(t.level)} · ${esc(t.term)}</h2><p>${dateLabel(t.start, { day: "numeric", month: "long", year: "numeric" })} — ${dateLabel(t.end, { day: "numeric", month: "long", year: "numeric" })} · AY ${esc(t.academicYear)}</p><details class="source-details"><summary>ที่มาและขอบเขตข้อมูล</summary><p class="quiet">${original(t.source)}<br>${original(t.scope)}</p></details><p class="pending">${original(profile.pending)}</p></div>`;
   }
   $("#schedule .section-head .sample").textContent = profile.real
     ? "รอเวลาเรียนจริง"
@@ -301,7 +303,7 @@ function showProject(id) {
   if (!p) return;
   detailId = id;
   $("#detail").innerHTML =
-    `<div class="detail-art">${art(p.icon)}</div><p class="eyebrow">${p.sample ? "SAMPLE PROJECT · โปรเจคตัวอย่าง" : "MY PROJECT"}</p><h2 id="detail-title">${esc(p.title)}</h2><p>${esc(p.note)}</p><span class="status">${STATUS[p.status]}</span><p class="update-note">${esc(p.update)}</p><div class="detail-actions" aria-label="เปลี่ยนสถานะ">${Object.entries(
+    `<div class="detail-art">${art(p.icon)}</div><p class="eyebrow">${p.sample ? "SAMPLE PROJECT · โปรเจคตัวอย่าง" : "MY PROJECT"}</p><h2 id="detail-title">${original(p.title)}</h2><p>${original(p.note)}</p><span class="status">${STATUS[p.status]}</span><p class="update-note">${original(p.update)}</p><div class="detail-actions" aria-label="เปลี่ยนสถานะ">${Object.entries(
       STATUS,
     )
       .map(
@@ -349,7 +351,7 @@ function listRecords() {
     data[category()]
       .map(
         (r) =>
-          `<div class="record"><div><b>${esc(r.title)}</b><small>${esc(r.date || r.start || r.update || r.note)}${r.sample ? " · ตัวอย่าง" : ""}</small></div><button data-edit-id="${esc(r.id)}">แก้ไข</button></div>`,
+          `<div class="record"><div><b>${original(r.title)}</b><small>${original(r.date || r.start || r.update || r.note)}${r.sample ? " · ตัวอย่าง" : ""}</small></div><button data-edit-id="${esc(r.id)}">แก้ไข</button></div>`,
       )
       .join("") || '<p class="empty">ยังไม่มีรายการ · เพิ่มรายการแรกได้เลย</p>';
 }
@@ -391,7 +393,7 @@ function form(id = null) {
   $("#record-list").hidden = true;
   const f = $("#record-form");
   f.hidden = false;
-  f.innerHTML = `<h3>${id ? "แก้ไขรายการ" : "เพิ่มรายการ"}</h3>${field("title", "ชื่อ", r.title, "text", 'required maxlength="90"')}${c !== "events" ? select("icon", "รูปภาพ", ICONS, r.icon) : ""}<div class="form-grid">${c === "schedule" ? select("day", "วันประจำสัปดาห์", Object.fromEntries(DAYS.map((d, i) => [i, d])), r.day) + select("type", "ประเภท", { day: "กิจกรรมทั่วไป", class: "เรียน", teach: "สอน / เตรียมสอน" }, r.type) + field("start", "เริ่ม", r.start, "time", "required") + field("end", "สิ้นสุด", r.end, "time", "required") : ""}${c === "events" ? field("date", "วันที่", r.date, "date", "required") + select("kind", "ประเภท", KINDS, r.kind) : ""}${c === "projects" ? select("status", "สถานะ", STATUS, r.status) + field("progress", "ความคืบหน้า (%)", r.progress, "number", 'min="0" max="100" required') : ""}</div><label>รายละเอียด<textarea name="note" maxlength="500">${esc(r.note)}</textarea></label>${c === "projects" ? field("update", "อัปเดตล่าสุด", r.update, "text", 'maxlength="500"') : ""}${c === "interests" ? field("url", "ลิงก์ YouTube / แหล่งเรียนรู้ (https://) — เว้นว่างได้", r.url, "url") + '<p class="quiet">เลือกลิงก์ช่อง / วิดีโอทางการที่ตรวจแล้ว เหมาะกับเด็ก · เปิดเว็บภายนอกเมื่อกดเท่านั้น</p>' : ""}${select("sample", "ป้ายกำกับข้อมูล", { yes: "ข้อมูลตัวอย่าง", no: "ข้อมูลที่ผู้ปกครองใส่" }, r.sample ? "yes" : "no")}<p id="form-error" class="error" role="alert"></p><div class="form-actions"><button class="primary" type="submit">บันทึก</button><button type="button" id="cancel-form">ยกเลิก</button>${id ? '<button type="button" class="danger" id="delete-record">ลบรายการ</button>' : ""}</div>`;
+  f.innerHTML = `<h3>${id ? "แก้ไขรายการ" : "เพิ่มรายการ"}</h3>${field("title", "ชื่อ", r.title, "text", 'required maxlength="90"')}${c !== "events" ? select("icon", "รูปภาพ", ICONS, r.icon) : ""}<div class="form-grid">${c === "schedule" ? select("day", "วันประจำสัปดาห์", Object.fromEntries(DAYS.map((d, i) => [i, d])), r.day) + select("type", "ประเภท", { day: "กิจกรรมทั่วไป", class: "เรียน", teach: "สอน / เตรียมสอน" }, r.type) + field("start", "เริ่ม", r.start, "time", "required") + field("end", "สิ้นสุด", r.end, "time", "required") : ""}${c === "events" ? field("date", "วันที่", r.date, "date", "required") + select("kind", "ประเภท", KINDS, r.kind) : ""}${c === "projects" ? select("status", "สถานะ", STATUS, r.status) + field("progress", "ความคืบหน้า (%)", r.progress, "number", 'min="0" max="100" required') : ""}</div><label>รายละเอียด<textarea data-original name="note" maxlength="500">${esc(r.note)}</textarea></label>${c === "projects" ? field("update", "อัปเดตล่าสุด", r.update, "text", 'maxlength="500"') : ""}${c === "interests" ? field("url", "ลิงก์ YouTube / แหล่งเรียนรู้ (https://) — เว้นว่างได้", r.url, "url") + '<p class="quiet">เลือกลิงก์ช่อง / วิดีโอทางการที่ตรวจแล้ว เหมาะกับเด็ก · เปิดเว็บภายนอกเมื่อกดเท่านั้น</p>' : ""}${select("sample", "ป้ายกำกับข้อมูล", { yes: "ข้อมูลตัวอย่าง", no: "ข้อมูลที่ผู้ปกครองใส่" }, r.sample ? "yes" : "no")}<p id="form-error" class="error" role="alert"></p><div class="form-actions"><button class="primary" type="submit">บันทึก</button><button type="button" id="cancel-form">ยกเลิก</button>${id ? '<button type="button" class="danger" id="delete-record">ลบรายการ</button>' : ""}</div>`;
   $("#cancel-form").onclick = listRecords;
   if (id)
     $("#delete-record").onclick = () => {
@@ -462,6 +464,7 @@ $("#record-form").onsubmit = (e) => {
 };
 tick();
 render();
+initLanguages(() => { tick(); render(); });
 setInterval(tick, 15000);
 if (loadWarning)
   toast(

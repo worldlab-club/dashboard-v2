@@ -48,9 +48,12 @@ test("public demo export strips private data, stale private files, docs and impo
     "art.js",
     "assets",
     "data-profile.js",
+    "i18n.js",
     "index.html",
     "model.js",
     "styles.css",
+    "translations.js",
+    "vocabulary.js",
   ]);
   for (const name of names.filter((n) => n !== "assets")) {
     const content = await readFile(

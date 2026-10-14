@@ -74,3 +74,7 @@ Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and i
 - `docs/QA.md` — verification evidence and limitations
 
 ![Desktop sample dashboard](docs/desktop.jpg)
+
+### Languages and Chinese vocabulary
+
+Choose ไทย / English / 中文（简体） in the header. Chinese mode offers 42 contextual learning cards with Traditional forms, pinyin, Thai/English meanings and character details. Personal records and source notes retain their original language. Language preference is browser-local and independent of saved records. See [language coverage, sources and limitations](docs/LANGUAGES.md).

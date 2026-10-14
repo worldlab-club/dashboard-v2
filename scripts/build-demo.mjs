@@ -16,10 +16,15 @@ const sourceFiles = [
   "app.js",
   "model.js",
   "art.js",
+  "i18n.js",
+  "translations.js",
+  "vocabulary.js",
 ];
 const brandFiles = [
   "assets/world-lab-logo.png",
   "assets/fonts/fonts.css",
+  "assets/fonts/noto-sans-cjk-sc-400.otf",
+  "assets/fonts/notocjk-OFL.txt",
   "assets/fonts/dm-sans-400.ttf",
   "assets/fonts/dm-sans-600.ttf",
   "assets/fonts/dm-sans-700.ttf",

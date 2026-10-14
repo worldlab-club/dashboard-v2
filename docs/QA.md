@@ -69,3 +69,7 @@ After the private-plan Pages restriction and public audience were explained, the
 - Preserved confirmed data and editing/filter/status/calendar behavior. Current/next picture cards appear before parent-facing term detail; provenance is a keyboard-operable details disclosure. Five lab colors have icon/text labels, including Inner World.
 - Local rendered QA: 390×844 mobile, 820×1180 tablet, 320×800 narrow mobile, desktop default. No horizontal overflow at checked widths; logo loads; document fonts report loaded; console has no captured errors/warnings. Parent dialog and source disclosures operate. The existing ten automated model/profile/export checks pass, and sample export now includes an exact allowlist of CI assets while excluding confirmed records.
 - Screenshots saved outside the repository as task deliverables. The task-local World-Lab-CI.md mirrors docs/BRAND_GUIDE.md for the separate Obsidian vault executor; this task does not write to the vault.
+
+## Three-language UI and vocabulary
+
+See [LANGUAGES.md](LANGUAGES.md) for coverage, explicit original-language boundaries, source verification, popup accessibility and desktop/tablet/mobile interaction evidence. 13 automated tests and syntax/sample-export checks pass. Original dashboard repository remains untouched.

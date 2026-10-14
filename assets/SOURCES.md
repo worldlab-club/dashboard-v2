@@ -6,3 +6,5 @@
 - Dashboard illustrations in `art.js` remain original native SVG drawings; they are an implementation adaptation, not official World Lab logo assets.
 
 See `docs/BRAND_GUIDE.md` for source priority, observed legacy variants and accessible digital adaptations.
+
+Chinese glyph support: `fonts/noto-sans-cjk-sc-400.otf` is the unchanged official Noto Sans CJK SC Regular font from https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf (retrieved 2026-10-14). It supports both scripts used in the vocabulary cards. License: `fonts/notocjk-OFL.txt` from the official `Sans/LICENSE`. All font requests remain same-origin.
