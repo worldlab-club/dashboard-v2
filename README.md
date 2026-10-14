@@ -75,6 +75,6 @@ Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and i
 
 ![Desktop sample dashboard](docs/desktop.jpg)
 
-### Languages and Chinese vocabulary
+### Simultaneous languages and Chinese vocabulary
 
-Choose ไทย / English / 中文（简体） in the header. Chinese mode offers 42 contextual learning cards with Traditional forms, pinyin, Thai/English meanings and character details. Personal records and source notes retain their original language. Language preference is browser-local and independent of saved records. See [language coverage, sources and limitations](docs/LANGUAGES.md).
+English leads, with smaller Thai and Simplified Chinese labels directly underneath on the same page. There is no language selector. Previous language preferences are ignored; saved personal records are unchanged. Underlined Chinese words open the 42 contextual learning cards with Traditional forms, pinyin, Thai/English meanings and character details. Chinese learning taps stay separate from navigation and filter actions. Personal records and source evidence retain their original language. See [coverage, sources and limitations](docs/LANGUAGES.md).

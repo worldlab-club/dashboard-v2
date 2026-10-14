@@ -1,4 +1,4 @@
-import { initLanguages, locale, translate } from "./i18n.js";
+import { initLanguages, locale, translate } from "./i18n.js?v=stacked-1";
 import {
   DAYS,
   STATUS,
@@ -464,7 +464,7 @@ $("#record-form").onsubmit = (e) => {
 };
 tick();
 render();
-initLanguages(() => { tick(); render(); });
+initLanguages();
 setInterval(tick, 15000);
 if (loadWarning)
   toast(

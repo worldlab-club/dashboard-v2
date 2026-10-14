@@ -1507,16 +1507,12 @@ h1 {
 /* Local multilingual UI, with separate, explicit vocabulary learning actions. */
 :root { --font-body: "DM Sans", "Noto Sans Thai", "Noto Sans CJK", Tahoma, sans-serif; }
 :lang(zh-Hans), :lang(zh-Hant) { font-family: "Noto Sans CJK", "DM Sans", sans-serif; }
-html:lang(zh-Hans) .brand, html:lang(zh-Hans) .brand-foot { font-family: var(--font-brand); }
-.language-tools { display: inline-flex; align-items: center; gap: 5px; }
-.language-tools select { min-height: 44px; max-width: 155px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); padding: 6px; }
 .header-right { flex-wrap: wrap; }
 .language-note { font-size: 12px; color: var(--muted); margin: 12px 0; }
 .vocabulary { background: #eef2fd; border: 1px solid #c6d2f0; padding: 14px 18px; border-radius: 16px; margin: 14px 0; }
 .vocabulary summary { cursor: pointer; min-height: 30px; font-weight: 600; }
 .word-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .word-list button { padding: 7px 12px; }
-.word-help { font: 15px var(--font-body); display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 6px; margin-left: 8px; vertical-align: middle; }
 #word-dialog { width: min(640px, calc(100vw - 28px)); max-width: calc(100vw - 28px); max-height: calc(100dvh - 36px); overflow: auto; padding: 28px; overscroll-behavior: contain; }
 #word-dialog::backdrop { background: #202b3b88; }
 #word-content h2 { font-size: 42px; line-height: 1.3; margin: 14px 44px 4px 0; overflow-wrap: anywhere; }
@@ -1530,8 +1526,122 @@ html:lang(zh-Hans) .brand, html:lang(zh-Hans) .brand-foot { font-family: var(--f
 @media(max-width:600px) {
   header { gap: 8px; flex-wrap: wrap; }
   .header-right { gap: 8px; margin-left: auto; }
-  .language-tools select { max-width: 132px; font-size: 13px; }
   #word-dialog { padding: 20px; }
   .character-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+/* Simultaneous languages: English leads, Thai and Chinese remain readable. */
+.ml-label { display: inline-flex; flex-direction: column; align-items: flex-start; max-width: 100%; min-width: 0; vertical-align: top; white-space: normal; letter-spacing: normal; }
+.ml-primary { display: block; font-size: inherit; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+.ml-secondary { display: block; font-size: 13px; font-weight: 400; line-height: 1.6; letter-spacing: normal; overflow-wrap: anywhere; white-space: normal; }
+.ml-secondary[lang="th"] { font-family: "Noto Sans Thai",sans-serif; }
+.ml-secondary[lang="zh-Hans"] { font-family: "Noto Sans CJK",sans-serif; }
+.ml-chinese { max-width: 100%; }
+.ml-action { display: inline-flex; flex-direction: column; min-width: 0; max-width: 100%; gap: 2px; align-items: stretch; }
+.ml-action > .ml-chinese { padding: 0 8px 4px; text-align: center; }
+.word-link { display: inline; min-height: 44px; min-width: 44px; padding: 3px 2px; background: transparent; border: 0; border-radius: 4px; font: inherit; color: #3457a7; text-decoration: underline dotted; text-underline-offset: 4px; cursor: pointer; }
+.word-link:hover { background: #e9eefc; }
+h1 .ml-primary { font-size: 1em; }
+h1 .ml-secondary { font-size: 16px; }
+h2 .ml-secondary { font-size: 14px; }
+.eyebrow .ml-secondary { font-size: 13px; text-transform: none; }
+button .ml-label, .jump .ml-label, .toolbox .ml-label { align-items: center; text-align: center; }
+button .ml-primary { font-size: 15px; }
+button .ml-secondary { font-size: 13px; }
+button, a, .panel, .form-grid > *, .section-head > * { min-width: 0; }
+.header-right button { white-space: normal; }
+.header-right button span.ml-primary { font-size: 15px; }
+.header-right button span.ml-secondary { font-size: 13px; }
+.jump { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); }
+.jump > .ml-action, .jump > a { width: 100%; }
+.jump a { justify-content: center; flex-direction: column; border-radius: 17px; padding: 12px; font-size: 26px; height: 100%; }
+.jump a:first-child { background: var(--paper); color: var(--ink); }
+.jump > :first-child > a, .jump > a:first-child { background: var(--ink); color: white; }
+.jump a .ml-primary { font-size: 15px; }
+.jump a .ml-secondary { font-size: 13px; }
+.segments { align-items: stretch; }
+.segments > * { flex: 1; }
+.segments .ml-action > button { flex: 1; }
+.segments .ml-secondary { font-size: 13px; }
+.day-picker button { min-height: 80px; }
+.day-picker .ml-label { width: 100%; align-items: center; }
+.day-picker button .ml-primary { font-size: 13px; }
+.calendar-grid .weekday { font-size: 13px; min-height: 72px; }
+.calendar-grid .weekday .ml-label { align-items: center; }
+.legend { align-items: stretch; }
+.legend .ml-action { flex: 1 1 110px; }
+.legend > button { flex: 1 1 110px; }
+.toolbox { grid-template-columns: repeat(3,minmax(0,1fr)); align-items: stretch; }
+.toolbox a { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+.toolbox a span { white-space: normal; }
+.toolbox a .ml-primary { font-size: 15px; }
+.toolbox a .ml-secondary { font-size: 13px; }
+.lab-key { flex-wrap: wrap; }
+.lab-key > span { flex: 1 1 120px; }
+.lab-key small .ml-primary, .lab-key small .ml-secondary { font-size: 13px; }
+.language-note { background: #fffefa; border-left: 3px solid var(--blue); padding: 12px 16px; }
+.language-note > * { display: block; font-size: 13px; line-height: 1.65; }
+.language-note strong { font-size: 15px; color: var(--ink); }
+.language-note small:first-of-type { margin-top: 8px; }
+.vocabulary > p > span { display: block; font-size: 13px; }
+.word-list button { flex: 1 1 130px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.word-list button > span:first-child { font-size: 15px; font-weight: 600; }
+.word-list button small, .word-list button > span:last-child { font-size: 13px; }
+.section-head { align-items: flex-start; flex-wrap: wrap; }
+.section-head .sample { max-width: 100%; }
+.pill, .sample, .quiet, .privacy, .source-details { font-size: 13px; }
+.focus-card .pill { border-radius: 12px; }
+.form-actions { flex-wrap: wrap; }
+.form-actions > button { flex: 1 1 120px; }
+#record-form label > .ml-label { margin-bottom: 6px; }
+#record-form select { max-width: 100%; }
+.notice { align-items: flex-start; }
+@media(max-width:600px) {
+  .jump { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .toolbox { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .welcome { align-items: flex-start; }
+  .welcome h1 { font-size: 27px; }
+  .welcome > div:first-child { flex: 1; min-width: 0; }
+  .clock { max-width: 95px; }
+  .focus-card { grid-template-columns: minmax(0,1fr) 95px; padding: 18px; }
+  .focus-card .art { width: 95px; height: 110px; }
+  .focus-card h2 { font-size: 24px; }
+  .focus-card p { font-size: 15px; }
+  .focus-card .ml-secondary { font-size: 13px; }
+  .segments { flex-direction: column; }
+  .segments .ml-action { flex-direction: row; align-items: center; }
+  .segments .ml-action > button { flex: 1; }
+  .segments .ml-action > .ml-chinese { flex: 1; padding: 4px; }
+  .day-picker { gap: 1px; }
+  .day-picker button { min-width: 0; min-height: 82px; }
+  .day-picker .ml-primary, .day-picker .ml-secondary { font-size: 13px; }
+  .calendar-grid { gap: 2px; }
+  .calendar-grid .weekday { font-size: 13px; }
+  .lab-key { display: flex; }
+  .lab-key > span { flex: 1 1 120px; }
+  .editor-toolbar { flex-wrap: wrap; }
+  .editor-toolbar > label { width: 100%; }
+  .editor-toolbar select { width: 100%; max-width: 100%; }
+  .editor-toolbar > button { width: 100%; }
+  .context-panel .pending, .source-details { font-size: 13px; }
+}
+.ml-primary { font-size: max(15px,1em); }
+.eyebrow .ml-primary { font-size: 14px; }
+.option-preview { margin-top: 6px; border-left: 2px solid var(--line); padding-left: 8px; }
+.option-preview .ml-primary { font-size: 15px; }
+.calendar-grid .weekday .ml-primary { font-size: 13px; }
+.notice { margin-top: 20px; }
+.language-note { font-size: 13px; }
+@media(max-width:600px) {
+  .welcome { display: flex; flex-direction: column; gap: 10px; }
+  .welcome > div:first-child { width: 100%; }
+  .welcome .clock { order: -1; width: 100%; max-width: none; margin: 0; }
+  .clock > div { display: flex; gap: 14px; align-items: flex-start; width: 100%; }
+  .clock strong { font-size: 24px; }
+  .clock small { flex: 1; }
+  .clock small .ml-label { flex-direction: row; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; }
+  .clock small .ml-primary { font-size: 14px; }
+  .welcome h1 { font-size: 27px; }
+  .welcome .eyebrow { margin-top: 8px; }
+  .focus-grid { margin-bottom: 20px; }
+}

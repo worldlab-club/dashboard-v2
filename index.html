@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="th">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -12,10 +12,10 @@
       content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
     />
     <title>World Lab · Dashboard v2</title>
-    <link rel="stylesheet" href="assets/fonts/fonts.css?v=languages-1" />
-    <link rel="stylesheet" href="styles.css?v=languages-1" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css?v=stacked-1" />
+    <link rel="stylesheet" href="styles.css?v=stacked-1" />
     <link rel="icon" href="assets/world-lab-logo.png" type="image/png" />
-    <script type="module" src="app.js?v=languages-1"></script>
+    <script type="module" src="app.js?v=stacked-1"></script>
   </head>
   <body>
     <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
@@ -31,19 +31,15 @@
         <span>World Lab<small>LEARN. BUILD. EXPLORE.</small></span></a
       >
       <div class="header-right">
-        <label class="language-tools"><span>🌐</span><select id="language" aria-label="Language / ภาษา / 语言"><option value="th">ไทย</option><option value="en">English</option><option value="zh-Hans">中文（简体）</option></select></label><span class="version">DASHBOARD / V2</span
+        <span class="version">DASHBOARD / V2</span
         ><button id="edit">⚙ <span>ผู้ปกครอง</span></button>
       </div>
     </header>
     <main id="main">
-      <div class="notice">
-        <span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span
-        ><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>
-      </div>
-      <p id="language-note" class="language-note"></p><details id="vocabulary" class="vocabulary" hidden><summary>📖 词语学习 · คำศัพท์ · Vocabulary</summary><p>点击词语学习发音和含义。菜单和链接仍然直接执行原有操作。</p><div id="word-list" class="word-list"></div></details><section class="welcome">
+<section class="welcome">
         <div>
           <p class="eyebrow">WORLD LAB · LEARNING SPACE</p>
-          <h1>วันนี้ ค้นพบอะไรดี<span class="orange">?</span></h1>
+          <h1>วันนี้ ค้นพบอะไรดี?</h1>
           <p id="today-label"></p>
         </div>
         <div class="clock">
@@ -53,17 +49,22 @@
           </div>
         </div>
       </section>
+      <section
+        id="focus"
+        class="focus-grid"
+        aria-label="กิจกรรมตอนนี้และถัดไป"
+      ></section>
       <nav class="jump" aria-label="ไปยังส่วนต่าง ๆ">
         <a href="#schedule">🗓️ <span>แผนวันนี้</span></a
         ><a href="#calendar">📅 <span>ปฏิทิน</span></a
         ><a href="#projects">🛠️ <span>ลงมือทำ</span></a
         ><a href="#interests">🔭 <span>อยากรู้</span></a>
       </nav>
-      <section
-        id="focus"
-        class="focus-grid"
-        aria-label="กิจกรรมตอนนี้และถัดไป"
-      ></section>
+      <div class="notice">
+        <span>🧪 <b>โลกทดลอง · ข้อมูลตัวอย่างทั้งหมด</b></span
+        ><span>ยังไม่ใช่ตารางจริงของโรงเรียน</span>
+      </div>
+      <p id="language-note" class="language-note"></p><details id="vocabulary" class="vocabulary"><summary>📖 Vocabulary · คำศัพท์ · 词语学习</summary><p><span lang="en">Tap Chinese words to learn. Menu actions stay separate.</span><span lang="th">กดคำจีนเพื่อเรียนคำศัพท์ แยกจากปุ่มเมนู</span><span lang="zh-Hans">点击中文词语学习，菜单操作保持独立。</span></p><div id="word-list" class="word-list"></div></details>
       <section
         id="context"
         class="context-panel"

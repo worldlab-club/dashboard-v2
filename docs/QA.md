@@ -73,3 +73,7 @@ After the private-plan Pages restriction and public audience were explained, the
 ## Three-language UI and vocabulary
 
 See [LANGUAGES.md](LANGUAGES.md) for coverage, explicit original-language boundaries, source verification, popup accessibility and desktop/tablet/mobile interaction evidence. 13 automated tests and syntax/sample-export checks pass. Original dashboard repository remains untouched.
+
+## Simultaneous language correction
+
+English-primary stacked Thai/Chinese replaces the selector; prior preference ignored. See LANGUAGES.md for 320/390px and desktop checks, independent Chinese learning controls, form previews and unchanged personal records.

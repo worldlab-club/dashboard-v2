@@ -733,3 +733,18 @@ export const labels = {
     "zh-Hans": "🔒 仅保存在此浏览器。同一浏览器配置的使用者可能看到数据。不上传、不同步。清除浏览器数据可能导致编辑丢失。"
   }
 };
+// Thai counterparts for the brand's English interface captions.
+Object.assign(labels['A LITTLE RHYTHM FOR THE DAY'],{th:'จังหวะเล็ก ๆ ของวัน'});
+Object.assign(labels['DAYS TO LOOK FORWARD TO'],{th:'วันดี ๆ ที่รออยู่'});
+Object.assign(labels['SMALL STEPS, BIG IDEAS'],{th:'ก้าวเล็ก ไอเดียใหญ่'});
+Object.assign(labels['FOLLOW YOUR CURIOSITY'],{th:'ตามความอยากรู้ไป'});
+Object.assign(labels['THE WORLD LAB TOOLBOX'],{th:'กล่องเครื่องมือ World Lab'});
+Object.assign(labels['GROWN-UP CORNER'],{th:'มุมผู้ปกครอง'});
+Object.assign(labels['MY PROJECT'],{th:'โปรเจคของฉัน'});
+Object.assign(labels['PROJECT /'],{th:'โปรเจค /'});
+Object.assign(labels['CURIOUS /'],{th:'อยากรู้ /'});
+Object.assign(labels['WORLD LAB · LEARNING SPACE'],{th:'WORLD LAB · พื้นที่เรียนรู้'});
+Object.assign(labels['CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว'],{th:'ช่วงเทอมที่ยืนยันแล้ว'});
+Object.assign(labels['SAMPLE PROJECT · โปรเจคตัวอย่าง'],{th:'โปรเจคตัวอย่าง'});
+Object.assign(labels['ตอนนี้ · NOW'],{th:'ตอนนี้'});
+Object.assign(labels['ต่อไป · UP NEXT'],{th:'ต่อไป'});

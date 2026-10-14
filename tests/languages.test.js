@@ -1,25 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {translate,readLanguage,LANGUAGE_KEY} from '../i18n.js';
+import {translate,stackedParts} from '../i18n.js';
 import {labels} from '../translations.js';
 import {vocabulary,findWord} from '../vocabulary.js';
-import {KEY} from '../model.js';
+import {readFileSync} from 'node:fs';
 test('all fixed labels have English and Simplified Chinese translations',()=>{
   assert(Object.keys(labels).length>150);
   for(const [source, target] of Object.entries(labels)){
     assert(target.en && target['zh-Hans'],source);
     assert.equal(translate(source,'en'),target.en,source);
     assert.equal(translate(source,'zh-Hans'),target['zh-Hans'],source);
-    assert.equal(translate(source,'th'),source);
+    assert.equal(translate(source,'th'),target.th || source);
   }
   assert.equal(translate('🌴 วันหยุด','zh-Hans'),'🌴 假期');
   assert.equal(translate('โรงเรียนของน้อง','en'),'โรงเรียนของน้อง');
 });
-test('language preference is separate from personal records and fails safely',()=>{
-  assert.notEqual(LANGUAGE_KEY,KEY);
-  assert.equal(readLanguage({getItem:()=> 'zh-Hans'}),'zh-Hans');
-  assert.equal(readLanguage({getItem:()=> 'zh-Hant'}),'th');
-  assert.equal(readLanguage({getItem(){throw Error('blocked')}}),'th');
+test('simultaneous language parts ignore the legacy preference and contain all three labels',()=>{
+  assert.deepEqual(stackedParts('ตารางเรียน'),{en:'Classes',th:'ตารางเรียน',zh:'课程表'});
+  const code=readFileSync(new URL('../i18n.js',import.meta.url),'utf8');
+  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert(!code.includes('localStorage'));
+  assert(!html.includes('id="language"'));
+  assert.equal(translate('โรงเรียนของน้อง','en'),'โรงเรียนของน้อง');
 });
 test('vocabulary is contextual, has both scripts, Thai/English and per-character readings',()=>{
   assert.equal(vocabulary.length,42);
