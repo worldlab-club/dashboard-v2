@@ -45,7 +45,7 @@ npm run build:demo
 # Produces dist-demo/ with invented, clearly labelled examples only.
 ```
 
-The exporter copies six allowlisted application files, replaces the data entry point with generic samples, excludes the confirmed-data module/docs/screenshots, removes stale unapproved output, and audits known real-data markers. Sample and confirmed profiles use different browser storage keys. Demo schedules and exam dates are labelled invented examples; no worksheet handwriting was used as an actual schedule. YouTube links remain unconfigured until verified choices are supplied.
+The exporter copies six allowlisted application files plus the exact verified logo/font asset allowlist, replaces the data entry point with generic samples, excludes the confirmed-data module/docs/screenshots, removes stale unapproved output, and audits known real-data markers. Sample and confirmed profiles use different browser storage keys. Demo schedules and exam dates are labelled invented examples; no worksheet handwriting was used as an actual schedule. YouTube links remain unconfigured until verified choices are supplied.
 
 No external fonts, images, analytics, weather or scripts load automatically; CSP blocks connections. External learning links leave the site only when clicked and have their own privacy policies. GitHub hosting can collect standard request/security logs.
 
@@ -60,7 +60,7 @@ No external fonts, images, analytics, weather or scripts load automatically; CSP
 
 ## Design references and structure
 
-Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and its [index.html source](https://github.com/worldlab-club/dashboard/blob/main/index.html) at public commit `aa20ff7087ada3256e4a47684e5a147e5c353f8e`. The old repo contains one HTML file and no README or AGENTS.md. This project retains the warm background and World Lab green/yellow/orange/blue palette, buildless HTML approach, and widget focus. It uses its own original SVG artwork and a local system Thai font instead of remote assets or the old external weather/navigation scripts.
+Inspected [original dashboard](https://worldlab-club.github.io/dashboard/) and its [index.html source](https://github.com/worldlab-club/dashboard/blob/main/index.html) at public commit `aa20ff7087ada3256e4a47684e5a147e5c353f8e`. The old repo contains one HTML file and no README or AGENTS.md. This project retains the warm background and World Lab green/yellow/orange/blue palette, buildless HTML approach, and widget focus. It now uses the user-supplied Canva logo and exact lab palette, the original dashboard's digital typography (self-hosted Sanchez, DM Sans and Noto Sans Thai), and original SVG widget illustrations. See [the synthesized CI guide](docs/BRAND_GUIDE.md) and [asset sources/licenses](assets/SOURCES.md). No old weather/navigation scripts or runtime external fonts are loaded.
 
 - `index.html` — semantic page and modal shells, CSP
 - `styles.css` — palette, illustrated card layouts, responsive breakpoints

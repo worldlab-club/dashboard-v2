@@ -60,3 +60,12 @@ Hosting readiness: GitHub Pages Settings for the private repository says “Upgr
 ## Public release authorization and audit — 2026-10-14
 
 After the private-plan Pages restriction and public audience were explained, the parent explicitly requested public access. Only dashboard-v2 is changed to public and deployed through GitHub Pages. The default profile contains the confirmed term and existing World Lab resources; unknown times, course enrollment, holidays, exams and hobby status remain unknown. Audit of tracked files and reachable commit trees checks for secret material and unintended account/family identifiers before visibility changes. No unrelated personal records are included. The existing dashboard is untouched.
+
+## CI synthesis and application — 2026-10-14
+
+- Inspected all four pages of the user-provided Canva “World Lab - Final Logo” design in the verified World Lab Chrome profile, without altering the design or its access. Exported all four PNGs; reused page 1 unmodified. Page 3 solid-pixel palette confirms System #456DD0, Growth #669F65, Communication #F8642F, Logic #FFC53B and Inner World #D9D9D9.
+- Inspected the original dashboard repository inventory (only index.html; no separate README/AGENTS/design doc) and its source CSS: digital fonts, warm background, white panels, card radii, grid and spacing. The CI guide labels existing implementation versus v2 adaptations, and gives Canva priority over legacy palette variants.
+- Replaced the temporary star with the actual clover logo. Added self-hosted Sanchez/DM Sans/Noto Sans Thai with official SIL OFL licenses. No remote font calls or wider CSP permissions.
+- Preserved confirmed data and editing/filter/status/calendar behavior. Current/next picture cards appear before parent-facing term detail; provenance is a keyboard-operable details disclosure. Five lab colors have icon/text labels, including Inner World.
+- Local rendered QA: 390×844 mobile, 820×1180 tablet, 320×800 narrow mobile, desktop default. No horizontal overflow at checked widths; logo loads; document fonts report loaded; console has no captured errors/warnings. Parent dialog and source disclosures operate. The existing ten automated model/profile/export checks pass, and sample export now includes an exact allowlist of CI assets while excluding confirmed records.
+- Screenshots saved outside the repository as task deliverables. The task-local World-Lab-CI.md mirrors docs/BRAND_GUIDE.md for the separate Obsidian vault executor; this task does not write to the vault.

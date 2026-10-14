@@ -84,7 +84,7 @@ function dateLabel(date, opts = { day: "numeric", month: "short" }) {
 }
 function provenance(r) {
   return r.provenance
-    ? `<small class="provenance">ที่มา: ${esc(r.provenance.source)} · ตรวจ ${esc(r.provenance.checkedOn)}<br>${esc(r.provenance.scope)}</small>`
+    ? `<details class="source-details"><summary>ที่มา / สิ่งที่ยังไม่ยืนยัน</summary><small class="provenance">${esc(r.provenance.source)} · ตรวจ ${esc(r.provenance.checkedOn)}<br>${esc(r.provenance.scope)}</small></details>`
     : "";
 }
 function renderFocus() {
@@ -172,7 +172,7 @@ function renderCards() {
     data.interests
       .map((p, i) => {
         const url = safeUrl(p.url);
-        return `<article class="interest-card"><div class="picture ${["blue", "", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${provenance(p)}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
+        return `<article class="interest-card"><div class="picture ${["blue", "yellow", "yellow"][i % 3]}"><span class="number">CURIOUS / ${String(i + 1).padStart(2, "0")}</span>${art(p.icon)}</div><div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.note)}${p.sample ? " · ตัวอย่าง" : ""}</p>${provenance(p)}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ เปิดลิงก์เรียนรู้ ↗</a>` : '<span class="disabled-link">▶ รอผู้ปกครองเพิ่มลิงก์ YouTube</span>'}</div></article>`;
       })
       .join("") ||
     '<p class="empty">อยากรู้เรื่องอะไร? เพิ่มได้ในมุมผู้ปกครอง</p>';
@@ -194,7 +194,7 @@ function render() {
   if (profile.term) {
     const t = profile.term;
     $("#context").innerHTML =
-      `<div><p class="eyebrow">CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว</p><h2>${esc(t.school)} · ${esc(t.level)} · ${esc(t.term)}</h2><p>${dateLabel(t.start, { day: "numeric", month: "long", year: "numeric" })} — ${dateLabel(t.end, { day: "numeric", month: "long", year: "numeric" })} · AY ${esc(t.academicYear)}</p><p class="quiet">ที่มา: ${esc(t.source)}<br>${esc(t.scope)}</p><p class="pending">${esc(profile.pending)}</p></div>`;
+      `<div><p class="eyebrow">CONFIRMED TERM · ช่วงเทอมที่ยืนยันแล้ว</p><h2>${esc(t.school)} · ${esc(t.level)} · ${esc(t.term)}</h2><p>${dateLabel(t.start, { day: "numeric", month: "long", year: "numeric" })} — ${dateLabel(t.end, { day: "numeric", month: "long", year: "numeric" })} · AY ${esc(t.academicYear)}</p><details class="source-details"><summary>ที่มาและขอบเขตข้อมูล</summary><p class="quiet">${esc(t.source)}<br>${esc(t.scope)}</p></details><p class="pending">${esc(profile.pending)}</p></div>`;
   }
   $("#schedule .section-head .sample").textContent = profile.real
     ? "รอเวลาเรียนจริง"

@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="World Lab v2 — a picture-first learning dashboard. Browser-local editing; data profile controls sample or private content."
+      content="World Lab v2 — a picture-first learning dashboard. World Lab learning space with picture-first widgets and browser-local editing."
     />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
     />
     <title>World Lab · Dashboard v2</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="assets/world-lab-logo.png" type="image/png" />
     <script type="module" src="app.js"></script>
   </head>
   <body>
     <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
     <header>
       <a class="brand" href="./"
-        ><span class="brand-mark" aria-hidden="true">✳</span
-        ><span>World Lab<small>EVERY DAY IS A LITTLE DISCOVERY</small></span></a
+        ><img
+          class="brand-logo"
+          src="assets/world-lab-logo.png"
+          alt=""
+          width="64"
+          height="64"
+        />
+        <span>World Lab<small>LEARN. BUILD. EXPLORE.</small></span></a
       >
       <div class="header-right">
         <span class="version">DASHBOARD / V2</span
@@ -34,7 +42,7 @@
       </div>
       <section class="welcome">
         <div>
-          <p class="eyebrow">LET’S EXPLORE TOGETHER</p>
+          <p class="eyebrow">WORLD LAB · LEARNING SPACE</p>
           <h1>วันนี้ ค้นพบอะไรดี<span class="orange">?</span></h1>
           <p id="today-label"></p>
         </div>
@@ -45,12 +53,6 @@
           </div>
         </div>
       </section>
-      <section
-        id="context"
-        class="context-panel"
-        aria-label="ข้อมูลที่ยืนยันและรอยืนยัน"
-        hidden
-      ></section>
       <nav class="jump" aria-label="ไปยังส่วนต่าง ๆ">
         <a href="#schedule">🗓️ <span>แผนวันนี้</span></a
         ><a href="#calendar">📅 <span>ปฏิทิน</span></a
@@ -61,6 +63,12 @@
         id="focus"
         class="focus-grid"
         aria-label="กิจกรรมตอนนี้และถัดไป"
+      ></section>
+      <section
+        id="context"
+        class="context-panel"
+        aria-label="ข้อมูลที่ยืนยันและรอยืนยัน"
+        hidden
       ></section>
       <div class="dashboard-grid">
         <section id="schedule" class="panel schedule">
@@ -185,9 +193,24 @@
           >
         </div>
       </section>
+      <div class="lab-key" aria-label="สีและห้องเรียนรู้ World Lab">
+        <span class="lab-system"
+          ><i aria-hidden="true">⚙</i><b>System</b><small>ระบบ</small></span
+        ><span class="lab-growth"
+          ><i aria-hidden="true">🌱</i><b>Growth</b><small>เติบโต</small></span
+        ><span class="lab-communication"
+          ><i aria-hidden="true">💬</i><b>Com.</b><small>สื่อสาร</small></span
+        ><span class="lab-logic"
+          ><i aria-hidden="true">🧩</i><b>Logic</b><small>คิดเป็น</small></span
+        ><span class="lab-inner"
+          ><i aria-hidden="true">♡</i><b>Inner World</b
+          ><small>โลกข้างใน</small></span
+        >
+      </div>
       <footer>
         <span class="brand-foot"
-          >✳ World Lab <small>GROW AT YOUR OWN PACE.</small></span
+          ><img src="assets/world-lab-logo.png" alt="" width="40" height="40" />
+          World Lab <small>Learn. Build. Explore.</small></span
         >
         <p id="storage-status">
           🔒 ข้อมูลแก้ไขเก็บในเบราว์เซอร์นี้เท่านั้น ไม่ซิงค์ GitHub ·

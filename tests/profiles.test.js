@@ -46,12 +46,13 @@ test("public demo export strips private data, stale private files, docs and impo
   assert.deepEqual(names, [
     "app.js",
     "art.js",
+    "assets",
     "data-profile.js",
     "index.html",
     "model.js",
     "styles.css",
   ]);
-  for (const name of names) {
+  for (const name of names.filter((n) => n !== "assets")) {
     const content = await readFile(
       new URL(`../dist-demo/${name}`, import.meta.url),
       "utf8",
@@ -70,4 +71,13 @@ test("public demo export strips private data, stale private files, docs and impo
   assert(entry.includes("real:false"));
   assert(entry.includes("return seed()"));
   assert(entry.includes("public-sample-r1"));
+  const css = await readFile(
+    new URL("../dist-demo/assets/fonts/fonts.css", import.meta.url),
+    "utf8",
+  );
+  assert(!css.includes("https://"));
+  const logo = await readFile(
+    new URL("../dist-demo/assets/world-lab-logo.png", import.meta.url),
+  );
+  assert(logo.length > 1000);
 });
